@@ -6,11 +6,18 @@ import axios from 'axios';
 
 class BlogPost extends Component {
     state = {
-        post: []
+        post: [],
+        formPost: {
+            userid: 1,
+            title: '',
+            body: '',
+            id: 1
+        }
     }
 
     getData = () => {
-        axios.get('http://localhost:3004/posts')
+        //dilakukan secara desc dengan mempertimbangkan id
+        axios.get('http://localhost:3004/posts?_sort=id&_order=desc')
             .then((res) => {
                 this.setState({
                     post: res.data
@@ -18,9 +25,31 @@ class BlogPost extends Component {
             })
     }
 
+    postData = () => {
+        axios.post('http://localhost:3004/posts', this.state.formPost).then((res) => {
+            console.log(res);
+        }, (err) => {
+            console.log('error', err);
+        })
+    }
+
     hendleRemove = async (data) => {
         await axios.delete(`http://localhost:3004/posts/${data}`)
         this.getData()
+    }
+
+    hendleForChange = (event) => {
+        let formPostNew = { ...this.state.formPost };
+        let timestamp = new Date().getTime();
+        formPostNew['id'] = timestamp;
+        formPostNew[event.target.name] = event.target.value;
+        this.setState({
+            formPost: formPostNew
+        })
+    }
+
+    handleSubmit = () => {
+        this.postData();
     }
 
     //memanggil API (fetch & axios)
@@ -46,6 +75,24 @@ class BlogPost extends Component {
         return (
             <Fragment>
                 <h1>Blog Post</h1>
+                <div className="container">
+                    <div className="card card1">
+                        <div className="card-body">
+                            <h5 className="card-title">Add Film</h5>
+                            <form>
+                                <div className="form-group">
+                                    <input type="text" className="form-control" aria-describedby="emailHelp"
+                                        placeholder="Enter title" name="title" onChange={this.hendleForChange} />
+                                </div>
+                                <div className="form-group">
+                                    <textarea type="text" className="form-control" placeholder="Enter body"
+                                        name="body" onChange={this.hendleForChange} />
+                                </div>
+                                <button onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 {
                     //pengulangan
                     this.state.post.map(post => {
