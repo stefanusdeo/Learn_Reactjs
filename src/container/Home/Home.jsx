@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import BlogPost from '../../component/BlogPost/BlogPost';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import Product from '../Product/Product';
 
 class Home extends Component {
     render() {
         return (
-            <section>
-                <h3>Blog Post</h3>
-                <hr />
-                <BlogPost />
-            </section>
+            <Router>
+                <Route path="/" exact component={BlogPost} />
+                <Route path="/Card" component={Product} />
+            </Router>
         )
     }
 }
