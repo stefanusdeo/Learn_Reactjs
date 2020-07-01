@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Post from '../Post/Post';
 import './BlogPost.css';
-import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
 
 class BlogPost extends Component {

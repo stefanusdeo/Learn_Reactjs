@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 class CardProduct extends Component {
     state = {
@@ -28,13 +28,15 @@ class CardProduct extends Component {
     }
     render() {
         return (
-            <section>
-                <div>
-                    <button onClick={this.btnMinus}>-</button>
-                    <input value={this.state.JOrder}></input>
-                    <button onClick={this.btnPlus}>+</button>
+            <Fragment>
+                <div className="input-group container">
+                    <p type="text" name="title" className="form-control">{this.state.JOrder}</p>
+                    <div className="input-group-append">
+                        <button className="btn btn-outline-secondary" type="button" onClick={this.btnMinus}>-</button>
+                        <button className="btn btn-outline-secondary" type="button" onClick={this.btnPlus}>+</button>
+                    </div>
                 </div>
-            </section>
+            </Fragment>
         )
     }
 }

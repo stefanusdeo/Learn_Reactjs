@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CardProduct from '../CardProduct/CardProduct';
+import CardProduct from './CardProduct/CardProduct';
 
 class Product extends Component {
     state = {
@@ -14,7 +14,7 @@ class Product extends Component {
     render() {
         return (
             <section>
-                <div>
+                <div className="d-flex justify-content-center mt-5">
                     <p>Jumlah Product: <span><b>{this.state.JOrder}</b></span></p>
                 </div>
                 <CardProduct onCounterChange={(value) => this.handleConterChange(value)} />
