@@ -15,36 +15,36 @@ class BlogPost extends Component {
         isUpdate: false
     }
 
-    getData = () => {
+    getData = async () => {
         //dilakukan secara desc dengan mempertimbangkan id
-        axios.get('http://localhost:3004/posts?_sort=id&_order=desc')
-            .then((res) => {
-                this.setState({
-                    post: res.data
-                })
-            })
-    }
-
-    postData = () => {
-        axios.post('http://localhost:3004/posts', this.state.formPost).then((res) => {
-            console.log(res);
-        }, (err) => {
-            console.log('error', err);
+        const data = await axios.get('http://localhost:3004/posts?_sort=id&_order=desc')
+        this.setState({
+            post: data.data
         })
     }
 
-    putData = () => {
-        axios.put(`http://localhost:3004/posts/${this.state.formPost.id}`, this.state.formPost).then(res => {
-            this.getData();
-            this.setState({
-                isUpdate: false,
-                formPost: {
-                    userid: 1,
-                    title: '',
-                    body: '',
-                    id: 1
-                }
-            })
+    postData = async () => {
+        try {
+            const data = await axios.post('http://localhost:3004/posts', this.state.formPost)
+            console.log(data);
+
+        } catch (err) {
+            console.log('error', err);
+
+        }
+    }
+
+    putData = async () => {
+        await axios.put(`http://localhost:3004/posts/${this.state.formPost.id}`, this.state.formPost)
+        this.getData();
+        this.setState({
+            isUpdate: false,
+            formPost: {
+                userid: 1,
+                title: '',
+                body: '',
+                id: 1
+            }
         })
     }
 
