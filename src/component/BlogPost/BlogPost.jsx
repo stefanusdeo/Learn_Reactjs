@@ -4,15 +4,20 @@ import './BlogPost.css';
 import axios from 'axios';
 
 class BlogPost extends Component {
-    state = {
-        post: [],
-        formPost: {
-            userid: 1,
-            title: '',
-            body: '',
-            id: 1
-        },
-        isUpdate: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            post: [],
+            formPost: {
+                userid: 1,
+                title: '',
+                body: '',
+                id: 1
+            },
+            isUpdate: false,
+            showPost: false
+        }
+        this.hendleShowPost = this.hendleShowPost.bind(this);
     }
 
     getData = async () => {
@@ -81,25 +86,15 @@ class BlogPost extends Component {
         }
     }
 
-
-
     //memanggil API (fetch & axios)
     componentDidMount() {
-        // fetch('https://jsonplaceholder.typicode.com/posts')
-        //     .then(response => response.json())
-        //     .then(json => {
-        //         this.setState({
-        //             post: json
-        //         })
-        //     })
-
-        // axios.get('http://localhost:3004/posts')
-        //     .then((res) => {
-        //         this.setState({
-        //             post: res.data
-        //         })
-        //     })
         this.getData();
+    }
+
+    hendleShowPost = () => {
+        this.setState({
+            showPost: true
+        })
     }
 
     render() {
@@ -109,7 +104,9 @@ class BlogPost extends Component {
                 <div className="container">
                     <div className="card card1">
                         <div className="card-body">
-                            <h5 className="card-title">Add Film</h5>
+                            {this.state.showPost === true ? <div>
+                                <h5 className="card-title">Add Film</h5>
+                            </div> : <h4>Iam Hidden</h4>}
                             <form>
                                 <div className="form-group">
                                     <input type="text" className="form-control" aria-describedby="emailHelp"
@@ -121,16 +118,15 @@ class BlogPost extends Component {
                                         name="body" onChange={this.hendleForChange} value={this.state.formPost.body} />
                                 </div>
                                 <button onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
+                                <button onClick={() => { this.handleShowPost() }} className="btn btn-danger ml-2">Show Title</button>
                             </form>
                         </div>
                     </div>
                 </div>
-                {
-                    //pengulangan
+                {//pengulangan
                     this.state.post.map(post => {
                         return <Post key={post.id} data={post} btnRemove={this.hendleRemove} btnUpdate={this.hendleUpdate} />
                     })
-
                 }
             </Fragment>
         )
