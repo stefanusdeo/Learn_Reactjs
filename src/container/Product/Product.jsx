@@ -1,26 +1,24 @@
 import React, { Component } from 'react';
 import CardProduct from './CardProduct/CardProduct';
+import { connect } from 'react-redux';
 
 class Product extends Component {
-    state = {
-        JOrder: 1
-    }
-
-    handleConterChange = (newValue) => {
-        this.setState({
-            JOrder: newValue
-        })
-    }
     render() {
         return (
             <section>
                 <div className="d-flex justify-content-center mt-5">
-                    <p>Jumlah Product: <span><b>{this.state.JOrder}</b></span></p>
+                    <p>Jumlah Product: <span><b>{this.props.order}</b></span></p>
                 </div>
-                <CardProduct onCounterChange={(value) => this.handleConterChange(value)} />
+                <CardProduct />
             </section>
         )
     }
 }
 
-export default Product;
+const mapStateToProps = (state) => {
+    return {
+        order: state.totalOrder
+    }
+}
+
+export default connect(mapStateToProps)(Product);

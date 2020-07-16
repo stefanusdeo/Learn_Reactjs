@@ -1,39 +1,41 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 
 class CardProduct extends Component {
-    state = {
-        JOrder: 1
-    }
+    // state = {
+    //     JOrder: 1
+    // }
 
-    handleCounterChange = (newValue) => {
-        this.props.onCounterChange(newValue)
-    }
+    // handleCounterChange = (newValue) => {
+    //     this.props.onCounterChange(newValue)
+    // }
 
-    btnPlus = () => {
-        this.setState({
-            JOrder: this.state.JOrder + 1
-        }, () => {
-            this.handleCounterChange(this.state.JOrder)
-        })
+    // btnPlus = () => {
+    //     this.setState({
+    //         JOrder: this.state.JOrder + 1
+    //     }, () => {
+    //         this.handleCounterChange(this.state.JOrder)
+    //     })
 
-    }
-    btnMinus = () => {
-        if (this.state.JOrder > 0) {
-            this.setState({
-                JOrder: this.state.JOrder - 1
-            }, () => {
-                this.handleCounterChange(this.state.JOrder)
-            })
-        }
-    }
+    // }
+    // btnMinus = () => {
+    //     if (this.state.JOrder > 0) {
+    //         this.setState({
+    //             JOrder: this.state.JOrder - 1
+    //         }, () => {
+    //             this.handleCounterChange(this.state.JOrder)
+    //         })
+    //     }
+    // }
     render() {
+        console.log(this.props)
         return (
             <Fragment>
                 <div className="input-group container">
-                    <p type="text" name="title" className="form-control">{this.state.JOrder}</p>
+                    <p type="text" name="title" className="form-control">{this.props.order}</p>
                     <div className="input-group-append">
-                        <button className="btn btn-outline-secondary" type="button" onClick={this.btnMinus}>-</button>
-                        <button className="btn btn-outline-secondary" type="button" onClick={this.btnPlus}>+</button>
+                        <button className="btn btn-outline-secondary" type="button" onClick={this.props.btnMinus}>-</button>
+                        <button className="btn btn-outline-secondary" type="button" onClick={this.props.btnPlus}>+</button>
                     </div>
                 </div>
             </Fragment>
@@ -41,4 +43,16 @@ class CardProduct extends Component {
     }
 }
 
-export default CardProduct;
+const mapStateToProps = (state) => {
+    return {
+        order: state.totalOrder
+    }
+}
+
+const dispatchToProps = (dispatch) => {
+    return {
+        btnPlus: () => dispatch({ type: "ADD_ORDER" }),
+        btnMinus: () => dispatch({ type: "MINUS_ORDER" })
+    }
+}
+export default connect(mapStateToProps, dispatchToProps)(CardProduct);
