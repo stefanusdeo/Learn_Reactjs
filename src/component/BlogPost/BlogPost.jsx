@@ -104,9 +104,9 @@ class BlogPost extends Component {
                 <div className="container">
                     <div className="card card1">
                         <div className="card-body">
-                            {this.state.showPost === true ? <div>
+                            <div>
                                 <h5 className="card-title">Add Film</h5>
-                            </div> : <h4>Iam Hidden</h4>}
+                            </div>
                             <form>
                                 <div className="form-group">
                                     <input type="text" className="form-control" aria-describedby="emailHelp"

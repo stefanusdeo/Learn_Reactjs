@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import ActionType from '../../../redux/reducer/globalActionType';
+
 
 class CardProduct extends Component {
     // state = {
@@ -51,8 +53,8 @@ const mapStateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
     return {
-        btnPlus: () => dispatch({ type: "ADD_ORDER" }),
-        btnMinus: () => dispatch({ type: "MINUS_ORDER" })
+        btnPlus: () => dispatch({ type: ActionType.ADD_ORDER }),
+        btnMinus: () => dispatch({ type: ActionType.MINUS_ORDER })
     }
 }
 export default connect(mapStateToProps, dispatchToProps)(CardProduct);

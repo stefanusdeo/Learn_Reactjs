@@ -6,31 +6,9 @@ import Home from './container/Home/Home';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.css';
+import rootReducer from './redux/reducer/globalReducer';
 
 
-const initialState = {
-  totalOrder: 0
-}
-
-//reducer
-const rootReducer = (state = initialState, action) => {
-  if (action.type === "ADD_ORDER") {
-    return {
-      ...state,
-      totalOrder: state.totalOrder + 1
-    }
-  } if (action.type === "MINUS_ORDER") {
-    let totalOrder = 0
-    if (state.totalOrder > 0) {
-      totalOrder = state.totalOrder - 1
-    }
-    return {
-      ...state,
-      totalOrder: totalOrder
-    }
-  }
-  return state;
-}
 
 //store
 const store = createStore(rootReducer);
